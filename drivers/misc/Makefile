@@ -68,6 +68,7 @@ obj-$(CONFIG_QPNP_MISC) 	+= qpnp-misc.o
 obj-$(CONFIG_ODM_WT_EDIT)       += hardware_info.o
 obj-$(CONFIG_FORCE_FAST_CHARGE) += fastchg.o
 
+obj-$(CONFIG_KPROFILES)	        += kprofiles.o
 obj-$(CONFIG_OKL4_USER_VIRQ)	+= okl4-virq.o
 obj-$(CONFIG_OKL4_RINGBUF)	+= okl4-ringbuf.o
 obj-$(CONFIG_TEST_IRQ_REQUESTER) += irq_requester.o
