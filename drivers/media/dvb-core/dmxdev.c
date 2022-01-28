@@ -4850,7 +4850,7 @@ int dvb_dmxdev_init(struct dmxdev *dmxdev, struct dvb_adapter *dvb_adapter)
 
 	dmxdev->filter = vmalloc(dmxdev->filternum * sizeof(struct dmxdev_filter));
 	if (!dmxdev->filter)
-		return -ENOMEM;
+				return -ENOMEM;
 
 	dmxdev->playback_mode = DMX_PB_MODE_PUSH;
 	dmxdev->demux->dvr_input_protected = 0;
@@ -4862,13 +4862,13 @@ int dvb_dmxdev_init(struct dmxdev *dmxdev, struct dvb_adapter *dvb_adapter)
 		dmxdev->filter[i].dev = dmxdev;
 		dmxdev->filter[i].buffer.data = NULL;
 		dvb_dmxdev_filter_state_set(&dmxdev->filter[i],
-					    DMXDEV_STATE_FREE);
+					 						   DMXDEV_STATE_FREE);
 	}
 
 	dvb_register_device(dvb_adapter, &dmxdev->dvbdev, &dvbdev_demux, dmxdev,
-			    DVB_DEVICE_DEMUX, dmxdev->filternum);
+			    DVB_DEVICE_DEMUX, 0);
 	dvb_register_device(dvb_adapter, &dmxdev->dvr_dvbdev, &dvbdev_dvr,
-			    dmxdev, DVB_DEVICE_DVR, dmxdev->filternum);
+			    dmxdev, DVB_DEVICE_DVR, 0);
 
 	dvb_ringbuffer_init(&dmxdev->dvr_buffer, NULL, 8192);
 	dvb_ringbuffer_init(&dmxdev->dvr_input_buffer, NULL, 8192);
@@ -4885,6 +4885,13 @@ int dvb_dmxdev_init(struct dmxdev *dmxdev, struct dvb_adapter *dvb_adapter)
 			dmxdev->demux->debugfs_demux_dir, dmxdev,
 			&dbgfs_filters_fops);
 
+	return 0;
+
+err_register_dvr_dvbdev:
+	dvb_unregister_device(dmxdev->dvbdev);
+err_register_dvbdev:
+	vfree(dmxdev->filter);
+	dmxdev->filter = NULL;
 	return 0;
 }
 
