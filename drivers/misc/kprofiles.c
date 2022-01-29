@@ -16,7 +16,7 @@
 #if defined(CONFIG_AUTO_KPROFILES_MSM_DRM) || defined(CONFIG_AUTO_KPROFILES_FB)
 static bool screen_on = true;
 #endif
-static unsigned int mode = 4;
+static unsigned int mode = 3;
 #if defined(CONFIG_AUTO_KPROFILES_MSM_DRM) || defined(CONFIG_AUTO_KPROFILES_FB)
 static unsigned int set_mode;
 #endif
